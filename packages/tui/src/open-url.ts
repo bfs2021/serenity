@@ -7,6 +7,8 @@ export function openUrl(
 	command = process.platform === "darwin" ? "open" : "xdg-open",
 ): void {
 	spawn(command, [url], { detached: true, stdio: "ignore" })
-		.on("error", (err: Error) => onError?.(`couldn't open the link: ${err.message}`))
+		.on("error", (err: Error) =>
+			onError?.(`couldn't open the link: ${err.message}`),
+		)
 		.unref();
 }

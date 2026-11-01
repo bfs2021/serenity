@@ -1148,7 +1148,8 @@ export function App({ home, repo, tmuxPane }: AppProps) {
 					return;
 			}
 			if (key.return) return activate();
-			if (input === "o" && selectedLink) return openUrl(selectedLink, setNotice);
+			if (input === "o" && selectedLink)
+				return openUrl(selectedLink, setNotice);
 			if (!focused) return;
 			switch (input) {
 				case "y":

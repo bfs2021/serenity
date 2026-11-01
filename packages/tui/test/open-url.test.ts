@@ -4,7 +4,11 @@ import { openUrl } from "../src/open-url";
 test("openUrl reports a missing opener instead of crashing", async () => {
 	const notices: string[] = [];
 	expect(() =>
-		openUrl("https://example.com", (m) => notices.push(m), "serenity-not-an-opener"),
+		openUrl(
+			"https://example.com",
+			(m) => notices.push(m),
+			"serenity-not-an-opener",
+		),
 	).not.toThrow();
 	await new Promise((resolve) => setTimeout(resolve, 250));
 	expect(notices.length).toBe(1);
