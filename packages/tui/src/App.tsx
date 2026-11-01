@@ -684,7 +684,7 @@ export function App({ home, repo, tmuxPane }: AppProps) {
 
 	/** x, or Enter (which also opens it), on a Slack item: gone from NEEDS YOU for good (ADR 0034, 0050). */
 	const dismissSlack = (item: SlackItem, open: boolean) => {
-		if (open && item.permalink) openUrl(item.permalink);
+		if (open && item.permalink) openUrl(item.permalink, setNotice);
 		call("slack.dismiss", { channelId: item.channelId, ts: item.ts }).then(
 			() => setNotice(`dismissed ${item.author}'s message`),
 			fail,
@@ -701,7 +701,7 @@ export function App({ home, repo, tmuxPane }: AppProps) {
 		if (!onMaster) return card ? attach(card) : undefined;
 		if (selected === MASTER_INPUT) return setMasterText("");
 		if (slackItem) return dismissSlack(slackItem, true);
-		if (selectedLink) return openUrl(selectedLink);
+		if (selectedLink) return openUrl(selectedLink, setNotice);
 		if (!focused) return;
 		if (focused.status === "waiting") return attach(focused);
 		call("session.dismiss", { id: focused.id }).then(
@@ -1148,7 +1148,7 @@ export function App({ home, repo, tmuxPane }: AppProps) {
 					return;
 			}
 			if (key.return) return activate();
-			if (input === "o" && selectedLink) return openUrl(selectedLink);
+			if (input === "o" && selectedLink) return openUrl(selectedLink, setNotice);
 			if (!focused) return;
 			switch (input) {
 				case "y":
@@ -1172,7 +1172,7 @@ export function App({ home, repo, tmuxPane }: AppProps) {
 					}
 					return;
 				case "o":
-					if (focused.pr) openUrl(focused.pr.url);
+					if (focused.pr) openUrl(focused.pr.url, setNotice);
 					else setNotice(`${focused.name} has no PR yet`);
 					return;
 				case "f":
